@@ -32,3 +32,7 @@ C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.pdb
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.csproj.CopyComplete
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Movies\Random.g.cshtml.cs
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_NavBar.g.cshtml.cs
+C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Customers\Details.g.cshtml.cs
+C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Customers\index.g.cshtml.cs
+C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Movies\Index.g.cshtml.cs
+C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Movies\Details.g.cshtml.cs

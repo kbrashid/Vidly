@@ -1,28 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using System.Web;
 using Vidly.Models;
-using Vidly.ViewModels;
-
 
 namespace Vidly.Controllers
 {
     public class CustomersController : Controller
     {
+        private VidlyContext _context;
+
+        public CustomersController()
+        {
+            _context = new VidlyContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            //base.Dispose(disposing);
+            _context.Dispose();
+        }
         // GET: Customers
         public ViewResult Index()
         {
-            var customers = GetCustomers();
+            //var customers = _context.Customers.ToList();
+            //---Apply egar loading --- add include() -------
+            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
 
             return View(customers);
         }
 
         public IActionResult Details(int id)
         {
-            var customer = GetCustomers().SingleOrDefault(c => c.Id == id);
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customer == null)
             {
@@ -31,17 +40,17 @@ namespace Vidly.Controllers
             }
 
             return View(customer);
-
         }
 
-        private IEnumerable<Customer> GetCustomers()
-        {
-            return new List<Customer>
-            {
-                new Customer { Id = 1, Name = "John Smith" },
-                new Customer { Id = 2, Name = "Mary Williams" }
-            };
-        }
+        //private IEnumerable<Customer> GetCustomers()
+        //{
+        //    return new List<Customer>
+        //    {
+        //        new Customer { Id = 1, Name = "John Smith" },
+        //        new Customer { Id = 2, Name = "Mary Williams" }
+        //    };
+        //}
+
 
     }//end class
 }//end namespace

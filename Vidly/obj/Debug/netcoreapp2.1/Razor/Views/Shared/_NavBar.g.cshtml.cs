@@ -67,7 +67,7 @@ using Vidly.Models;
             ");
             EndContext();
             BeginContext(646, 86, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fa514ca0e0e74483b48d4d99d336cf87", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "98bb27aec03c4c57a68dfe2029089fea", async() => {
                 BeginContext(723, 5, true);
                 WriteLiteral("Vidly");
                 EndContext();

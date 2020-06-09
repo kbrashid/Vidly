@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vidly.Models;
 
 namespace Vidly.Migrations
 {
     [DbContext(typeof(VidlyContext))]
-    partial class VidlyContextModelSnapshot : ModelSnapshot
+    [Migration("20200609162905_PopulateGenres")]
+    partial class PopulateGenres
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,20 +80,9 @@ namespace Vidly.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateAdded");
-
-                    b.Property<byte>("GenreId");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<byte>("NumberInStock");
-
-                    b.Property<DateTime>("ReleaseDate");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
                 });
@@ -101,14 +92,6 @@ namespace Vidly.Migrations
                     b.HasOne("Vidly.Models.MembershipType", "MembershipType")
                         .WithMany()
                         .HasForeignKey("MembershipTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Vidly.Models.Movie", b =>
-                {
-                    b.HasOne("Vidly.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Vidly.Models;
 using Vidly.ViewModels;
 
@@ -10,35 +11,31 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
-        //public IActionResult Random()
-        //{
-        //    var movie = new Movie() { Name = "Sare Gama Pa" };
-        //    var customers = new List<Customer>
-        //    {
-        //        new Customer {Name = "Customer 1"},
-        //        new Customer {Name = "Customer 2"},
-        //        new Customer {Name = "Customer 3"}
-        //    };
+        private VidlyContext _context;
 
-        //    var viewModel = new RandomMovieViewModel
-        //    {
-        //        Movie = movie,
-        //        Customers = customers
-        //    };
+        public MoviesController()
+        {
+            _context = new VidlyContext();
+        }
 
-        //    return View(viewModel);
-        //}
-
+        protected override void Dispose(bool disposing)
+        {
+            //base.Dispose(disposing);
+            _context.Dispose();
+        }
         public IActionResult index()
         {
-            var movies = GetMovies();
+            //var movies = GetMovies();
+            //---Apply egar loading --- add include() -------
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
             return View(movies);
         }
 
 
         public IActionResult Details(int id)
         {
-            var movie = GetMovies().SingleOrDefault(c => c.Id == id);
+            //var movie = GetMovies().SingleOrDefault(c => c.Id == id);
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(c => c.Id == id);
 
             if (movie == null)
             {

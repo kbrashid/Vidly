@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
@@ -13,12 +14,26 @@ namespace Vidly.Controllers
         {
             _context = new VidlyContext();
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             //base.Dispose(disposing);
             _context.Dispose();
         }
+
+        //adding new Customer -----
+        public IActionResult New()
+        {
+            var membershipTypes = _context.MembershipType.ToList();
+            var viewModel = new NewCustomerViewModel
+            {
+                MembershipTypes = membershipTypes
+            };
+
+            return View(viewModel);
+        }
+
+
         // GET: Customers
         public ViewResult Index()
         {

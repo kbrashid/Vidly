@@ -25,22 +25,51 @@ namespace Vidly.Controllers
         public IActionResult New()
         {
             var membershipTypes = _context.MembershipType.ToList();
-            var viewModel = new NewCustomerViewModel
+            var viewModel = new CustomerFormViewModel
             {
                 MembershipTypes = membershipTypes
             };
 
-            return View(viewModel);
+            return View("CustomerForm",viewModel);
         }
 
+        // ----Saving Form Data --------
         [HttpPost]
-       public IActionResult Create(Customer customer)
+       public IActionResult Save(Customer customer)
         {
-            _context.Customers.Add(customer);
+            if (customer.Id ==0)
+                _context.Customers.Add(customer);
+            else
+            {
+                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+
+                //Mapper.Map(customer. customerInDb)
+
+                customerInDb.Name = customer.Name;
+                customerInDb.Birthdate = customer.Birthdate;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
+                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+            }
             _context.SaveChanges();
             //return View();
             return RedirectToAction("Index", "Customers");
 
+        }
+        // ---update data -----
+        public IActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer == null)
+                return Content("Not Found Customer");
+            //return HttpNotFound();
+
+            var viewModel = new CustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipType.ToList()
+            };
+
+            return View("CustomerForm", viewModel);
         }
 
         // GET: Customers
@@ -66,6 +95,7 @@ namespace Vidly.Controllers
             return View(customer);
         }     
 
+       
 
     }//end class
 }//end namespace

@@ -36,4 +36,4 @@ C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Custom
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Customers\index.g.cshtml.cs
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Movies\Index.g.cshtml.cs
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Movies\Details.g.cshtml.cs
-C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Customers\New.g.cshtml.cs
+C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Razor\Views\Customers\CustomerForm.g.cshtml.cs

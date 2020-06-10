@@ -6,6 +6,9 @@
 }
 
 <h2>Movies</h2>
+@*<button type="button" class="btn btn-primary">@Html.ActionLink("NEW MOVIE", "Edit", "Movies", new { id = 3 }, null)</button>*@
+<button type="button" class="btn btn-primary">@Html.ActionLink("NEW MOVIE", "New", "Movies", new { id = 3 }, null)</button>
+@*@Html.ActionLink("<button type = 'submit' class='btn btn-primary'>NEW MOVIES</button>", "Edit", "Movies",null , null)*@
 
 @if (!Model.Any())
 {
@@ -23,11 +26,16 @@ else
         <tbody>
             @foreach (var movie in Model)
             {
-            <tr>
-                @*<td>@movie.Name</td>*@
-                <td>@Html.ActionLink(movie.Name, "Details", "Movies", new { id = movie.Id }, null)</td>
-                <td>@movie.Genre.Name</td>
-            </tr>
+                <tr>
+                    @*<td>@movie.Name</td>*@                  
+
+                    <td>@Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, null)</td>
+
+                    @*<img alt="Edit" src="@Url.Content("https://cdn4.iconfinder.com/data/icons/simplicio/128x128/file_edit.png")" width="15" style="horiz-align:left "> </a>*@
+                    @*<td>@Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id },null)<img src="@Url.Content("https://cdn4.iconfinder.com/data/icons/simplicio/128x128/file_edit.png")" width="15" style="align-items:flex-start"></td>*@
+
+                    <td>@movie.Genre.Name</td>
+                </tr>
             }
         </tbody>
     </table>

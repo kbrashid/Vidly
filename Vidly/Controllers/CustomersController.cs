@@ -43,7 +43,7 @@ namespace Vidly.Controllers
             {
                 var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
 
-                //Mapper.Map(customer. customerInDb)
+                //Mapper.Map(customer, customerInDb)
 
                 customerInDb.Name = customer.Name;
                 customerInDb.Birthdate = customer.Birthdate;

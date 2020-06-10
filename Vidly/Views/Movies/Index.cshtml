@@ -6,10 +6,8 @@
 }
 
 <h2>Movies</h2>
-@*<button type="button" class="btn btn-primary">@Html.ActionLink("NEW MOVIE", "Edit", "Movies", new { id = 3 }, null)</button>*@
-<button type="button" class="btn btn-primary">@Html.ActionLink("NEW MOVIE", "New", "Movies", new { id = 3 }, null)</button>
-@*@Html.ActionLink("<button type = 'submit' class='btn btn-primary'>NEW MOVIES</button>", "Edit", "Movies",null , null)*@
-
+@*<button type="button" class="btn btn-primary">@Html.ActionLink("NEW MOVIE", "New", "Movies", new { id = 3 }, null)</button>*@
+<button type="button" class="btn btn-primary">NEW @Html.ActionLink("NEW MOVIE", "New", "Movies", null, null)</button>
 @if (!Model.Any())
 {
     <p>We don't have any movie yet.</p>

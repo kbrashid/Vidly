@@ -35,3 +35,12 @@ body {
         display: none;
     }
 }
+/* make red for error message */
+.field-validation-error {
+    color: red;
+}
+
+/* make red reactangle for text box which has error */
+.input-validation-error {
+    border: 2px solid red;
+}

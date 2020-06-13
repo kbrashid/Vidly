@@ -36,6 +36,7 @@ namespace Vidly.Controllers
 
         // ----Saving Form Data --------
         [HttpPost]
+        [ValidateAntiForgeryToken]
        public IActionResult Save(Customer customer)
         {
             if (!ModelState.IsValid)

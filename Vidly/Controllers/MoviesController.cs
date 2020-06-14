@@ -33,10 +33,19 @@ namespace Vidly.Controllers
         }
 
         //--- Save form data to DB --------
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Save(Movie movie)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new MovieFormViewModel
+                {
+                    Movie = movie,
+                    Genres = _context.Genres.ToList()
+                };
+                return View("MovieForm", viewModel);
+            }
             if (movie.Id == 0)
             {
                 movie.DateAdded = DateTime.Now;
@@ -101,10 +110,11 @@ namespace Vidly.Controllers
 
         public IActionResult New()
         {
+            var genres = _context.Genres.ToList();
             var viewModel = new MovieFormViewModel
-            {
+            {  
                 Movie = new Movie(),
-                Genres = _context.Genres.ToList()
+                Genres = genres
             };
 
             return View("MovieForm", viewModel);

@@ -28,28 +28,18 @@ namespace Vidly.Controllers.Api
         // GET /api/customers
         [HttpGet]
         public IEnumerable<CustomerDto> GetCustomers()
-        {
-            //var config = new MapperConfiguration(cfg => cfg.CreateMap<Customer, CustomerDto>());
-            //var mapper = config.CreateMapper();
-            //return _context.Customers.ToList().Select(_mapper.Map<Customer, CustomerDto>);
-
+        {            
             return _context.Customers.ToList().Select(_mapper.Map<Customer, CustomerDto>);
             //return _context.Customers.ToList();
         }
 
-        // GET /api/customers/1
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public ActionResult<Customer> GetCustomer(int id)
+        // GET /api/customers/1        
         [HttpGet("{id}")]
         public CustomerDto GetCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (customer == null)
-                return null;
-            //throw new HttpResponseException(HttpStatusCode.NotFound);                              
-            //return new BadRequestObjectResult(this.ModelState);
-            //return NotFound();
+                return null;            
             //return BadRequest();
 
             //return customer;
@@ -62,9 +52,12 @@ namespace Vidly.Controllers.Api
         {
             if (!ModelState.IsValid)
                 return null;
-            //return StatusCode(404);               
+            //return StatusCode(404);    
+            
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CustomerDto, Customer>());
+            var mapper = config.CreateMapper();
 
-            var customer = _mapper.Map<CustomerDto, Customer>(customerDto);
+            var customer = mapper.Map<CustomerDto, Customer>(customerDto);
 
             _context.Customers.Add(customer);
             _context.SaveChanges();
@@ -82,10 +75,12 @@ namespace Vidly.Controllers.Api
             //return null;
             var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
             //if (customerInDb == null)
-                //throw new HttpResponseException(HttpStatusCode.NotFound); 
+            //throw new HttpResponseException(HttpStatusCode.NotFound); 
 
-           // _mapper.Map<CustomerDto, Customer>(customerDto, customerInDb);
-            _mapper.Map(customerDto, customerInDb);
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CustomerDto, Customer>());
+            var mapper = config.CreateMapper();
+            mapper.Map(customerDto, customerInDb);
 
             //customerInDb.Name = customer.Name;
             //customerInDb.Birthdate = customer.Birthdate;

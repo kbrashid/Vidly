@@ -38,8 +38,10 @@ namespace Vidly
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             //services.AddAutoMapper();
             //AutoMapper.Mapper.Initialize(cfg => cfg.AddProfile<MappingProfile>());
-            services.AddSingleton<MappingProfile>();
+            //services.AddSingleton<MappingProfile>();
             services.AddDbContext<VidlyContext>();
+            services.AddAutoMapper(typeof(Startup));
+            //services.AddControllerWithViews();
 
             //services.AddDbContext<VidlyContext>(opt => opt.UseInMemoryDatabase("Vidly"));
             //services.AddControllers();

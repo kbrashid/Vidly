@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Vidly.DTOs;
 using Vidly.Models;
 
 namespace Vidly.Controllers.Api
@@ -14,24 +16,25 @@ namespace Vidly.Controllers.Api
     public class MoviesController : ControllerBase
     {
         private readonly VidlyContext _context;
-
-        public MoviesController(VidlyContext context)
+        private readonly IMapper _mapper;
+        public MoviesController(VidlyContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Movies
         [HttpGet]
-        public IEnumerable<Movie> GetMovies()
-        {
-           //return _context.Movies.Include(m => m.Genre).ToList();
-
-            return _context.Movies.ToList();
+        public IEnumerable<MovieDto> GetMovies()
+        {            
+            //return _context.Movies.ToList();
+            return _context.Movies.ToList().Select(_mapper.Map<Movie, MovieDto>);
         }
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMovie([FromRoute] int id)
+        //public async Task<IActionResult> GetMovie([FromRoute] int id)
+        public async Task<ActionResult<MovieDto>> GetMovie([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -45,25 +48,68 @@ namespace Vidly.Controllers.Api
                 return NotFound();
             }
 
-            return Ok(movie);
+            var movieDto = _mapper.Map<Movie, MovieDto>(movie);                       
+
+            //return Ok(movie);
+            return movieDto;
+
+
         }
 
+        //// PUT: api/Movies/5
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutMovie([FromRoute] int id, [FromBody] Movie movie)       
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (id != movie.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    //_context.Entry(movie).State = EntityState.Modified;       
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!MovieExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+
         // PUT: api/Movies/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovie([FromRoute] int id, [FromBody] Movie movie)
+
+        [HttpPut("{id}")]        
+        public async Task<IActionResult> PutMovie([FromRoute] int id, [FromBody] MovieDto movieDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != movie.Id)
+            if (id != movieDto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(movie).State = EntityState.Modified;
+            var movie = _mapper.Map<MovieDto, Movie>(movieDto); //changes dto to original
 
+            _context.Entry(movie).State = EntityState.Modified;
+            
             try
             {
                 await _context.SaveChangesAsync();
@@ -83,14 +129,33 @@ namespace Vidly.Controllers.Api
             return NoContent();
         }
 
+
+        //// POST: api/Movies
+        //[HttpPost]
+        //public async Task<IActionResult> PostMovie([FromBody] Movie movie)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    _context.Movies.Add(movie);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
+        //}
+
         // POST: api/Movies
+
         [HttpPost]
-        public async Task<IActionResult> PostMovie([FromBody] Movie movie)
+        public async Task<IActionResult> PostMovie([FromBody] MovieDto movieDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var movie = _mapper.Map<MovieDto, Movie>(movieDto);
 
             _context.Movies.Add(movie);
             await _context.SaveChangesAsync();

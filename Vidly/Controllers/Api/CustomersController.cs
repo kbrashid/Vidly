@@ -15,22 +15,23 @@ namespace Vidly.Controllers.Api
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private VidlyContext _context;
-        private  IMapper _mapper;
+        private readonly VidlyContext _context;
+        private readonly IMapper _mapper;
 
-        public CustomersController()
+        public CustomersController(VidlyContext context, IMapper mapper)
         {
-            _context = new VidlyContext();
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Customer, CustomerDto>());
-            _mapper = config.CreateMapper();
+            //_context = new VidlyContext();
+            //var config = new MapperConfiguration(cfg => cfg.CreateMap<Customer, CustomerDto>());
+            //_mapper = config.CreateMapper();
+            _context = context;
+            _mapper = mapper;
         }
 
         // GET /api/customers
         [HttpGet]
         public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _context.Customers.ToList().Select(M.Map<Customer, CustomerDto>);
-            return _context.Customers.ToList().Select(_mapper.Map<Customer, CustomerDto>);
+            return _context.Customers.ToList().Select(_mapper.Map<Customer, CustomerDto>);            
             //return _context.Customers.ToList();
         }
 

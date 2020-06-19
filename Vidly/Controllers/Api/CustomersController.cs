@@ -28,7 +28,8 @@ namespace Vidly.Controllers.Api
         // GET /api/customers
         [HttpGet]
         public IEnumerable<CustomerDto> GetCustomers()
-        {            
+        {
+            return _context.Customers.ToList().Select(M.Map<Customer, CustomerDto>);
             return _context.Customers.ToList().Select(_mapper.Map<Customer, CustomerDto>);
             //return _context.Customers.ToList();
         }

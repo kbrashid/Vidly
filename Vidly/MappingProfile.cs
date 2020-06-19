@@ -15,8 +15,8 @@ namespace Vidly
             //Mapper.CreateMap<Customer, CustomerDto>(); // is not working
             CreateMap<Customer, CustomerDto>();
             CreateMap<CustomerDto, Customer>();
-
-
+            CreateMap<Movie, MovieDto>();
+            CreateMap<MovieDto, Movie>();
         }
     }
 }

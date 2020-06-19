@@ -10,7 +10,6 @@ C:\Users\KBR\source\repos\Vidly\Vidly\bin\Debug\netcoreapp2.1\Vidly.dll
 C:\Users\KBR\source\repos\Vidly\Vidly\bin\Debug\netcoreapp2.1\Vidly.pdb
 C:\Users\KBR\source\repos\Vidly\Vidly\bin\Debug\netcoreapp2.1\Vidly.Views.dll
 C:\Users\KBR\source\repos\Vidly\Vidly\bin\Debug\netcoreapp2.1\Vidly.Views.pdb
-C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.csprojAssemblyReference.cache
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.TagHelpers.input.cache
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.TagHelpers.output.cache
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.RazorCoreGenerate.cache
@@ -38,3 +37,4 @@ C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.Views.pdb
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.dll
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.pdb
 C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.csproj.CopyComplete
+C:\Users\KBR\source\repos\Vidly\Vidly\obj\Debug\netcoreapp2.1\Vidly.csprojAssemblyReference.cache

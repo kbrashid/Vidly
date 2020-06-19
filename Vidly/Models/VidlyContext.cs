@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Vidly.DTOs;
 
 namespace Vidly.Models
 {
@@ -18,6 +19,7 @@ namespace Vidly.Models
             optionsBuilder.UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=Vidly;Integrated Security=True");
         }
+        //public DbSet<Vidly.DTOs.MovieDto> MovieDto { get; set; }
 
     }
 }

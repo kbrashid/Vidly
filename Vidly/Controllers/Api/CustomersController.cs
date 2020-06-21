@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Vidly.DTOs;
 using Vidly.Models;
 
 namespace Vidly.Controllers.Api
 {
-    [Route("/api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
     {
@@ -19,91 +19,119 @@ namespace Vidly.Controllers.Api
         private readonly IMapper _mapper;
 
         public CustomersController(VidlyContext context, IMapper mapper)
-        {
-            //_context = new VidlyContext();
-            //var config = new MapperConfiguration(cfg => cfg.CreateMap<Customer, CustomerDto>());
-            //_mapper = config.CreateMapper();
+        {;
             _context = context;
             _mapper = mapper;
         }
 
-        // GET /api/customers
+        // GET: api/Customers
         [HttpGet]
         public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _context.Customers.ToList().Select(_mapper.Map<Customer, CustomerDto>);            
-            //return _context.Customers.ToList();
+           //return _context.Customers;
+            return _context.Customers.ToList().Select(_mapper.Map<Customer, CustomerDto>);
         }
 
-        // GET /api/customers/1        
+        // GET: api/Customers/5
         [HttpGet("{id}")]
-        public CustomerDto GetCustomer(int id)
-        {
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
-            if (customer == null)
-                return null;            
-            //return BadRequest();
-
-            //return customer;
-            return _mapper.Map<Customer, CustomerDto>(customer);
-        }
-
-        //POST /api/customers
-        [HttpPost]
-        public CustomerDto CreateCustomer(CustomerDto customerDto)
+        public async Task<IActionResult> GetCustomer([FromRoute] int id)
         {
             if (!ModelState.IsValid)
-                return null;
-            //return StatusCode(404);    
+            {
+                return BadRequest(ModelState);
+            }
+
+            var customer = await _context.Customers.FindAsync(id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            var customerDto = _mapper.Map<Customer, CustomerDto>(customer);
+
+            //return Ok(customer);
+            return Ok(customerDto);
+        }
+
+        // PUT: api/Customers/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutCustomer([FromRoute] int id, [FromBody] CustomerDto customerDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != customerDto.Id)
+            {
+                return BadRequest();
+            }
+
+            var customer = _mapper.Map<CustomerDto, Customer>(customerDto); //changes dto to original
+
+            _context.Entry(customer).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CustomerExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Customers
+        [HttpPost]
+        public async Task<IActionResult> PostCustomer([FromBody] CustomerDto customerDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var customer = _mapper.Map<CustomerDto, Customer>(customerDto);
             
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CustomerDto, Customer>());
-            var mapper = config.CreateMapper();
-
-            var customer = mapper.Map<CustomerDto, Customer>(customerDto);
-
             _context.Customers.Add(customer);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            customerDto.Id = customer.Id;
-            return customerDto;
+            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
         }
 
-        // PUT /api/customers/1
-        [HttpPut]
-        public void UpdateCustomer(int id, CustomerDto customerDto)
+        // DELETE: api/Customers/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCustomer([FromRoute] int id)
         {
-            //if (!ModelState.IsValid)
-            //throw new HttpResponseException(HttpStatusCode.BadRequest); 
-            //return null;
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
-            //if (customerInDb == null)
-            //throw new HttpResponseException(HttpStatusCode.NotFound); 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var customer = await _context.Customers.FindAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CustomerDto, Customer>());
-            var mapper = config.CreateMapper();
-            mapper.Map(customerDto, customerInDb);
+            _context.Customers.Remove(customer);
+            await _context.SaveChangesAsync();
 
-            //customerInDb.Name = customer.Name;
-            //customerInDb.Birthdate = customer.Birthdate;
-            //customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
-            //customerInDb.MembershipTypeId = customer.MembershipTypeId;
-
-            _context.SaveChanges();
-
+            return Ok(customer);
         }
 
-        // DELETE /api/customers/1
-        [HttpDelete]
-        public void DeleteCustomer(int id)
+        private bool CustomerExists(int id)
         {
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
-            //if (customerInDb == null)
-            //throw new HttpResponseException(HttpStatusCode.NotFound); 
-
-            _context.Customers.Remove(customerInDb);
-            _context.SaveChanges();
+            return _context.Customers.Any(e => e.Id == id);
         }
-
     }
 }

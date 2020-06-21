@@ -1,0 +1,12 @@
+﻿ CreateMap<Customer, CustomerDto>().ForMember(m => m.Id, opt => opt.Ignore()); 
+ CreateMap<CustomerDto, Customer>();
+ CreateMap<Movie, MovieDto>().ForMember(m => m.Id, opt => opt.Ignore());
+ CreateMap<MovieDto, Movie>();
+
+ In Start.Cs file:
+  services.AddDbContext<VidlyContext>();
+  services.AddAutoMapper(typeof(Startup));
+
+  for this add dll 
+  AutoMapper.Data (4.1.0)
+  AutoMapperExtensions.MicrosoftDependencyInjection(7.0.0)

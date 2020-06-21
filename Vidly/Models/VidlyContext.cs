@@ -19,7 +19,6 @@ namespace Vidly.Models
             optionsBuilder.UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=Vidly;Integrated Security=True");
         }
-        //public DbSet<Vidly.DTOs.MovieDto> MovieDto { get; set; }
-
+       
     }
 }

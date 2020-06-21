@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vidly.DTOs;
@@ -17,6 +15,7 @@ namespace Vidly.Controllers.Api
     {
         private readonly VidlyContext _context;
         private readonly IMapper _mapper;
+
         public MoviesController(VidlyContext context, IMapper mapper)
         {
             _context = context;
@@ -33,8 +32,8 @@ namespace Vidly.Controllers.Api
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
-        //public async Task<IActionResult> GetMovie([FromRoute] int id)
-        public async Task<ActionResult<MovieDto>> GetMovie([FromRoute] int id)
+        //public async Task<ActionResult<MovieDto>> GetMovie([FromRoute] int id)
+        public async Task<IActionResult> GetMovie([FromRoute] int id)       
         {
             if (!ModelState.IsValid)
             {
@@ -47,52 +46,16 @@ namespace Vidly.Controllers.Api
             {
                 return NotFound();
             }
+                                    
+            var movieDto = _mapper.Map<Movie, MovieDto>(movie);
 
-            var movieDto = _mapper.Map<Movie, MovieDto>(movie);                       
-
-            //return Ok(movie);
-            return movieDto;
+            return Ok(movie);
+            //return OK(movieDto); // is not working here ?? but in customerController is working
 
 
         }
-
-        //// PUT: api/Movies/5
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutMovie([FromRoute] int id, [FromBody] Movie movie)       
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    if (id != movie.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    //_context.Entry(movie).State = EntityState.Modified;       
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!MovieExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
+               
         // PUT: api/Movies/5
-
         [HttpPut("{id}")]        
         public async Task<IActionResult> PutMovie([FromRoute] int id, [FromBody] MovieDto movieDto)
         {
@@ -128,24 +91,7 @@ namespace Vidly.Controllers.Api
 
             return NoContent();
         }
-
-
-        //// POST: api/Movies
-        //[HttpPost]
-        //public async Task<IActionResult> PostMovie([FromBody] Movie movie)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    _context.Movies.Add(movie);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
-        //}
-
-        // POST: api/Movies
+              
 
         [HttpPost]
         public async Task<IActionResult> PostMovie([FromBody] MovieDto movieDto)

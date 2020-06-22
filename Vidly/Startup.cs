@@ -38,7 +38,7 @@ namespace Vidly
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             //services.AddAutoMapper();
             
-            //services.AddSingleton<MappingProfile>();
+            services.AddSingleton<MappingProfile>();
             services.AddDbContext<VidlyContext>();
             services.AddAutoMapper(typeof(Startup));
             //services.AddControllerWithViews();           

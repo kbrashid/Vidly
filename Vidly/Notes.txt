@@ -10,3 +10,20 @@
   for this add dll 
   AutoMapper.Data (4.1.0)
   AutoMapperExtensions.MicrosoftDependencyInjection(7.0.0)
+
+  For new dialogbox need to install - packge bootbox -version: 4.3.0
+  but it has a conflict, so I install version 4.2.0
+  this is instal at c:\kbr\.nuget\bootbox\ ... from here copy .js files to 
+  wwwroot\lib\bootbox\dist\
+
+  <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/bootbox/dist/bootbox.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+
+  need here ???? bootbox.min.js like the following .........
+  <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"

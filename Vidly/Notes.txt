@@ -17,13 +17,30 @@
   wwwroot\lib\bootbox\dist\
 
   <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        ... ...
         <script src="~/lib/bootbox/dist/bootbox.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+       ... ...
     </environment>
 
   need here ???? bootbox.min.js like the following .........
   <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+
+Install-package jquery-datatables -version:1:10.11 but I installed 1.10.15
+
+//for Scripts -----
+ <environment include="Development">
+        ... ...
+        <script src="~/lib/bootbox/dist/bootbox.js"></script>
+        <script src="~/lib/DataTables/Scripts/DataTables/jquery.dataTables.js"></script>
+        <script src="~/lib/DataTables/Scripts/DataTables/dataTables.bootstrap.js"></script>
+       ... ...
+    </environment>
+
+	// for CSS -------
+	 <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/DataTables/Content/DataTables/css/dataTables.bootstrap.css" />
+    </environment>

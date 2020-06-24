@@ -6,35 +6,66 @@
 }
 
 <h2>Movies</h2>
-@*<button type="button" class="btn btn-primary">@Html.ActionLink("NEW MOVIE", "New", "Movies", new { id = 3 }, null)</button>*@
-<button type="button" class="btn btn-primary">NEW @Html.ActionLink("NEW MOVIE", "New", "Movies", null, null)</button>
-@if (!Model.Any())
-{
-    <p>We don't have any movie yet.</p>
-}
-else
-{
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Movie</th>
-                <th>Genre</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var movie in Model)
-            {
-                <tr>
-                    @*<td>@movie.Name</td>*@                  
+@*<button type="button" class="btn btn-primary">NEW @Html.ActionLink("NEW MOVIE", "New", "Movies", null, null)</button>*@
+<p>
+    @Html.ActionLink("New Movie", "New", "Movies", null, new { @class = "btn btn-primary" })
+</p>
+<table id="movies" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Genre</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
-                    <td>@Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, null)</td>
 
-                    @*<img alt="Edit" src="@Url.Content("https://cdn4.iconfinder.com/data/icons/simplicio/128x128/file_edit.png")" width="15" style="horiz-align:left "> </a>*@
-                    @*<td>@Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id },null)<img src="@Url.Content("https://cdn4.iconfinder.com/data/icons/simplicio/128x128/file_edit.png")" width="15" style="align-items:flex-start"></td>*@
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            var table = $("#movies").DataTable({
+                ajax: {
+                    url: "/api/movies",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, movie) {
+                            return "<a href='/movies/edit/" + movie.id + "'>" + movie.name + "</a>";
+                        }
+                    },
+                    {
+                        data: "genre.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-movie-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
 
-                    <td>@movie.Genre.Name</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            //---- to handle only one click event handler, move .js-delete to on( '''
+            $("#movies").on("click", ".js-delete", function () {
+                var button = $(this);
+                //--new bootsbox -------
+                bootbox.confirm("Are you sure you want to delete this movie?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/movies/" + button.attr("data-movie-id"),
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 }

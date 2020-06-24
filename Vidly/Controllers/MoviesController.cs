@@ -28,8 +28,11 @@ namespace Vidly.Controllers
         {
             //var movies = GetMovies();
             //---Apply egar loading --- add include() -------
-            var movies = _context.Movies.Include(m => m.Genre).ToList();
-            return View(movies);
+            //var movies = _context.Movies.Include(m => m.Genre).ToList();
+            //return View(movies);
+
+            //data call from API -----
+            return View();
         }
 
         //--- Save form data to DB --------

@@ -29,7 +29,10 @@ namespace Vidly.Controllers.Api
         public IEnumerable<CustomerDto> GetCustomers()
         {
            //return _context.Customers;
-            return _context.Customers.ToList().Select(_mapper.Map<Customer, CustomerDto>);
+            return _context.Customers
+                .Include(c => c.MembershipType)
+                .ToList()
+                .Select(_mapper.Map<Customer, CustomerDto>);
         }
 
         // GET: api/Customers/5

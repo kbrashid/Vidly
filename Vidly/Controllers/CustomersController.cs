@@ -89,9 +89,10 @@ namespace Vidly.Controllers
         {
             //var customers = _context.Customers.ToList();
             //---Apply egar loading --- add include() -------
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-
-            return View(customers);
+            //if API call we dont nee this now
+            //var customers = _context.Customers.Include(c => c.MembershipType).ToList();
+            //return View(customers);
+            return View();
         }
 
         public IActionResult Details(int id)

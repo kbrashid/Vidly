@@ -44,3 +44,5 @@ Install-package jquery-datatables -version:1:10.11 but I installed 1.10.15
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/lib/DataTables/Content/DataTables/css/dataTables.bootstrap.css" />
     </environment>
+
+	Modify Index.cshtml to take data from API call ----
